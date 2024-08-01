@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-deploy:
-    name: Build & Deploy homefirstweb Server
+    name: Build & Deploy hfo Server
     runs-on: ubuntu-latest
 
     steps:
@@ -49,7 +49,7 @@ jobs:
           context: .
           dockerfile: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/homefirstweb:${{ env.TAG }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hfo:${{ env.TAG }}
 
       # Step 8: Deploy to Server
       - name: Deploy to Server
@@ -59,6 +59,6 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/homefirstweb:${{ env.TAG }}
-            docker stop homefirstweb || true && docker rm homefirstweb || true
-            docker run -d --name homefirstweb -p 8449:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/homefirstweb:${{ env.TAG }}
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/hfo:${{ env.TAG }}
+            docker stop hfo || true && docker rm hfo || true
+            docker run -d --name hfo -p 8449:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/hfo:${{ env.TAG }}
