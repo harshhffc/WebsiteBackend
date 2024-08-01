@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-deploy:
-    name: Build & Deploy website Server
+    name: Build & Deploy homefirstweb Server
     runs-on: ubuntu-latest
 
     steps:
@@ -47,7 +47,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: Dockerfile
+          dockerfile: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/homefirstweb:${{ env.TAG }}
 
@@ -61,4 +61,4 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/homefirstweb:${{ env.TAG }}
             docker stop homefirstweb || true && docker rm homefirstweb || true
-            docker run -d --name homefirstweb -p 8443:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/homefirstweb:${{ env.TAG }}
+            docker run -d --name homefirstweb -p 8449:8080 ${{ secrets.DOCKER_HUB_USERNAME }}/homefirstweb:${{ env.TAG }}
